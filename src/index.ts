@@ -20,6 +20,7 @@ let errorMessage='';
 request.on("error", error => {
   errorMessage = error.message;
 });
+  //en
    response.on("finish", () => {
      const { rawHeaders, httpVersion, method, socket, url } = request;
      const { remoteAddress, remoteFamily } = socket;
@@ -41,7 +42,9 @@ request.on("error", error => {
       headers,
 
     }
+
        });
+
        fs.appendFile('log.txt', log + '\n', err => {
 
          //console.log(response)
@@ -51,32 +54,17 @@ request.on("error", error => {
          });
    });
 
-/*
-  let method = request.method;
-let url = request.url;
-let status = response.statusCode;
-let data=response;
-let log = `${method}:${url}:${status} ${data}`;
-//fs.writeFile('/log.txt',log);
-
-fs.appendFile('log.txt', log + '\n', err => {
-  console.log(log)
-    if (err) {
-      console.log(err);
-    }
-  });
-  */
   next();
 }
 
 
-
 var data=[{item: 'get milk'},{item: 'walk the dog'}, {item: 'coding'}];
 
-router.get('/hello', (request: Request, response: Response, next:NextFunction) => {
+router.get('/todo', function(req:Request,response:Response) {
 //  console.log(request)
-  response.send('welcome to our new page');
-  var resp=JSON.stringify({
+response.send(data);
+
+         var resp=JSON.stringify({
     response: {
       data
     }
@@ -86,6 +74,30 @@ router.get('/hello', (request: Request, response: Response, next:NextFunction) =
         console.log(err);
       }});
 });
+router.post('/todo',urlencodedParser,function(req:Request,res:Response){
+
+data.push(req.body);
+
+res.json(data);
+});
+
+app.delete('/todo/:id',function(req:Request,res:Response){
+console.log(req.params.id);
+var index=+req.params.id;
+data.splice(index, 1);
+  console.log(data);
+//  res.sendFile(__dirname+'/index.html');
+res.json(data);
+});
+app.patch('/todo/:id',function(req:Request,res:Response){
+console.log(req.params.id);
+var index=+req.params.id;
+ data[index]=req.body;
+  console.log(data);
+//  res.sendFile(__dirname+'/index.html');
+res.json(data);
+});
+
 app.use('/', router);
 
 module.exports = router;
