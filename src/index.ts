@@ -5,14 +5,28 @@ var express=require("express");
 var cors = require("cors");
 //var fs = require('fs');
 const app = express();
-const router = express.Router();
+//const router = express.Router();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(loggerMiddleware);
+app.use(Checkheaders);
+
 //fs.write('/log.txt','log');
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use(urlencodedParser);
+function Checkheaders(request: Request, response: Response, next:NextFunction) {
+if(request.header('x-Gateway-Apikey')!=='fixed'||request.header('csrf-token') =='' ) {
+          response.status(404).send({ error: 'Post not found' });
+}
+/*
+if(request.header('csrf-token') ==''){
+  response.status(404).send({ error: 'Post not found' });
+
+}
+*/
+next();
+}
 function loggerMiddleware(request: Request, response: Response, next:NextFunction) {
 const data=request.body;
 const requestStart = Date.now();
@@ -60,7 +74,7 @@ request.on("error", error => {
 
 var data=[{item: 'get milk'},{item: 'walk the dog'}, {item: 'coding'}];
 
-router.get('/todo', function(req:Request,response:Response) {
+app.get('/todo', function(req:Request,response:Response) {
 //  console.log(request)
 response.send(data);
 
@@ -74,7 +88,7 @@ response.send(data);
         console.log(err);
       }});
 });
-router.post('/todo',urlencodedParser,function(req:Request,res:Response){
+app.post('/todo',urlencodedParser,function(req:Request,res:Response){
 
 data.push(req.body);
 
@@ -98,9 +112,9 @@ var index=+req.params.id;
 res.json(data);
 });
 
-app.use('/', router);
+//app.use('/', router);
 
-module.exports = router;
+//module.exports = router;
 
 
 //app.get('/hello', (request: Request, response: Response, next:NextFunction) => {
