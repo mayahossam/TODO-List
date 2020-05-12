@@ -1,17 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React,{Component}  from 'react'
+import ReactDOM from 'react-dom'
+//import './styles/stylesheet.css'
+import './styles/stylesheet.scss'
+import {BrowserRouter} from 'react-router-dom'
+import{createStore} from 'redux'
+import rootReducer from './redux/reducer'
+import {Provider} from 'react-redux'
+import App from './Components/App'
+//const tasks=['Take out the trash','wash hand','read book'];
+//const element=React.createElement('ol',null,tasks.map((task,index)=>
+//React.createElement('li',{key:index},task)));
+//instead of calling the static task array, you will the the list and its property
+//  {this.props.tasks.map((task,index)=> <li key= {index}>{task} </li>)}
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const store=createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+
+ReactDOM.render(<Provider store={store}><BrowserRouter><App/></BrowserRouter></Provider>,document.getElementById('root'));
