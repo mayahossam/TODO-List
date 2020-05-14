@@ -16,9 +16,13 @@ const List = ({ todos,dispatch }) => (
          console.log(`IDS: ${todo.id}`);
          console.log(index);
          console.log(todo);
-           return <Todo key={`todo-${todo.id}`} id={todo.id} item={todo.item} dispatch={dispatch}  />;
+{        var indexoftodo =todos.findIndex(obj => obj.id === todo.id && obj.item === todo.item)
+}
+console.log(indexoftodo);
+
+           return <Todo key={`todo-${todo.id}`} index={index} id={todo.id} item={todo.item} dispatch={dispatch}  />;
          })
-       : "No todos, yay!"}
+       : "You're done, no todos available!"}
    </ul>
 </div>
 );

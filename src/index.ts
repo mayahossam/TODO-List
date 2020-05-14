@@ -104,17 +104,28 @@ console.log("RemovedDATA");
 //  res.sendFile(__dirname+'/index.html');
 res.json(data);
 });
-app.patch('/todo/:id',function(req:Request,res:Response){
-console.log(req.params.id);
-var index=+req.params.id;
-data[index].id=Number(new Date());
- data[index].item=req.body;
+app.patch('/todo/',urlencodedParser,function(req:Request,res:Response){
+  console.log("patch");
+
+console.log(req.body.index);
+console.log(req.body.item);
+
+var index=+req.body.index;
+console.log(index);
+data[index].item=req.body.item;
+//data[index].id=Number(new Date());
+ //data[index].item=req.body;
+ var todo={id:data[index].id,item:req.body.item,index:index}
   console.log(data);
-  var oneitem={id: req.body.id,item:req.body.item}
-  console.log(item);
+  var oneitem=[index,todo ]
+  console.log(todo);
+
+  console.log(todo.index);
+  console.log(todo.id);
+
 
 //  res.sendFile(__dirname+'/index.html');
-res.json(data);
+res.json(todo);
 });
 
 //app.use('/', router);

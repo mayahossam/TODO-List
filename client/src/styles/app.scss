@@ -27,7 +27,7 @@ ListItem:hover{
 }
 .todo__heading {
   text-align: center;
-
+color:black;
   @include carbon--type-style("expressive-heading-06");
 }
 

@@ -4,20 +4,20 @@ import {Link} from 'react-router-dom'
 import { Button ,TextInput} from "carbon-components-react";
 
 import { connect } from 'react-redux';
-import { Removetodo } from '../action/todos';
+import { Removetodo,editTodo } from '../action/todos';
 
  class Todo extends Component {
   //console.log(props.todos);
   constructor () {
    super();
-    this.state = { editing: false,id:'' }
+    this.state = { editing: false,id:'',index:'' }
 
 
 }
 
   handleEditing (event) {
     //console.log(todo.id);
-    this.setState({ editing:  true,id:this.props.id });
+    this.setState({ editing:  true,id:this.props.id , index:this.props.index});
     var item = event.target.value;
 
   //  this.flag.editing=true ;
@@ -31,19 +31,26 @@ import { Removetodo } from '../action/todos';
     if (event.keyCode === 13 ) { // submit
     this.setState({ editing:  false });
 
-  }
+
   var item = event.target.value;
   if(item ){
-  var todo= [{id: this.props.id,item:item}];
+  var todo= [{index: this.props.index,item:item}];
             console.log('done', todo);
 //this.setState( {id: Number(new Date()),
 //      item:item}
 //})
 //  this.props.onHistory.push('/')
-  this.props.addTodo(todo,this.props.id)
-  this.props.removeTodo(this.props.index)
+var edit=this.props
+var index=this.props.id
+var update=todo[0].item
+var index= this.props.index
+edit.dispatch(editTodo(todo[0]));
+
+  //edit.dispatch(editTodo(index,update));
+
 
   }
+    }
 
 }
   handleEditingChange (event) {
@@ -52,7 +59,7 @@ import { Removetodo } from '../action/todos';
 
     if(item ){
     var todo= [{id: this.props.id,item:item}];
-              console.log('Add', todo);
+          //    console.log('Add', todo);
   //this.setState( {id: Number(new Date()),
   //      item:item}
   //})
@@ -93,7 +100,7 @@ console.log(todo);
               }> Edit </Button>
                   </div>
                   <div style={editStyle}>
-
+                  <Link to=  {`/todo/${todo.id}`}/>
                               <TextInput onChange={this.handleChange}
                               onKeyDown={this.handleEditingDone.bind(this)}
                       onChange={this.handleEditingChange.bind(this)}

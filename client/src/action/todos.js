@@ -53,6 +53,7 @@ console.log(todoData.item)
 
 export function fetchtodo(){
     return dispatch => {
+
         return axios.get('todo',{headers: { 'csrf-token':'casw','x-Gateway-Apikey':'fixed' }})
       .then(response => response.data)
         .then( (data) => dispatch(
@@ -63,29 +64,56 @@ export function fetchtodo(){
           type: "ERROR", msg: "FAILED"}))
   }
 }
+export const editTodo = (Data = {
+    index: '',
+    item: '',
 
+}) => {
+  console.log("editTodo")
+  console.log("todoData.id")
+  console.log(Data.index)
+console.log(Data.item)
+    return (dispatch) => {
+        const todo = {
+            index: Data.index,
+            item: Data.item,
 
+        };
 
-
-
-
+        return axios.patch('todo/', todo,{headers: { 'csrf-token':'casw','x-Gateway-Apikey':'fixed' }})
+        .then(result => {
+          dispatch(    {
+                type:'Edit_Todo',
+                item:result.data.item,
+                id:result.data.id,
+                index:result.data.index
+              })
+      })
+  }
+};
 /*
-export function removeTodo(index){
-  return{
-    type:'Remove todo',
-    index:index
-  }
-}
-*/
-  export function editTodo(index,todo){
-        console.log('additem'+ todo)
-    return{
-      type:'edit_Todo',
-      todo:todo,
-      index:index
+export const editTodo = ( updates) => {
+  console.log("Edit data")
 
+  console.log(updates)
+  //console.log(id)
+
+    return (dispatch) => {
+      const todo = {
+          id: updates.id,
+          item:updates.item,
+
+      };
+        return axios.patch('todo', todo.item,{headers: { 'csrf-token':'casw','x-Gateway-Apikey':'fixed' }}).then(result => {
+            dispatch(    {
+                  type:'Edit_Todo',
+                  item:result.data.item,
+                  id:result.data.id
+                })
+        })
     }
-  }
+  };
+*/
 
 
  //export default removePost,addPost
