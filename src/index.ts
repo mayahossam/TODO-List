@@ -3,9 +3,15 @@ import fs from 'fs';
 import bodyParser from 'body-parser';
 var express=require("express");
 var cors = require("cors");
-
+var health="false";
 const app = express();
 //const router = express.Router();
+app.get('/todo/health', function(req:Request,response:Response) {
+//  console.log(request)
+var empty="Nothing to show"
+response.json(empty);
+
+});
 app.use(bodyParser.json());
 app.use(cors());
 app.use(loggerMiddleware);
@@ -21,6 +27,7 @@ if(request.header('x-Gateway-Apikey')!=='fixed'||request.header('csrf-token') ==
 }
 next();
 }
+
 function loggerMiddleware(request: Request, response: Response, next:NextFunction) {
 const data=request.body;
 const requestStart = Date.now();
@@ -66,6 +73,7 @@ request.on("error", error => {
 }
 
 
+
 var data=[{id:1,item: 'get milk'},{id:2,item: 'walk the dog'}, {id:3,item: 'coding'}];
 
 app.get('/todo', function(req:Request,response:Response) {
@@ -106,7 +114,6 @@ res.json(data);
 });
 app.patch('/todo/',urlencodedParser,function(req:Request,res:Response){
   console.log("patch");
-
 console.log(req.body.index);
 console.log(req.body.item);
 
@@ -126,7 +133,10 @@ data[index].item=req.body.item;
 
 //  res.sendFile(__dirname+'/index.html');
 res.json(todo);
+
 });
+
+
 
 //app.use('/', router);
 
