@@ -37,13 +37,7 @@ this.props.fetchtodo();
     <List {...this.props} />
 
   </h1>
-  <Route exact path="/" render={() => (
-          <div>
-          <List {...this.props}/>
 
-          </div>
-
-      )}/>
 
 
     </div>)

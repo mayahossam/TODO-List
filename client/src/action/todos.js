@@ -12,6 +12,7 @@ function getTodos(todos){
 }
 export const Removetodo = ({ id } = {}) => {
   console.log("delete")
+  console.log(id)
 
     return (dispatch) => {
       return axios.delete(`todo/${id}`,{headers: { 'csrf-token':'casw','x-Gateway-Apikey':'fixed' }})

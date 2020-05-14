@@ -71,8 +71,11 @@ edit.dispatch(editTodo(todo[0]));
 render() {
   const todo = this.props
   const id=todo.id
+  const index=todo.index
 //const todo=this.props.todo
-console.log(todo.dispatch);
+console.log("delete");
+
+console.log(todo.index);
 
 console.log("editing");
 
@@ -89,7 +92,7 @@ console.log("editing");
 console.log(todo);
           return<div className="landing-page__p">
                   <div style={viewStyle}>
-                <Link to=  {`/todo/${todo.id}`}/>
+                <Link to=  {`/todo/${todo.index}`}/>
                   <p> {todo.item} </p>
                   <Button size='small' onClick={() => {
             todo.dispatch(Removetodo({ id }));
