@@ -1,20 +1,32 @@
+/*
 import Main from './Main'
 import {connect}from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as actions from '../redux/actions'
 import {withRouter} from 'react-router'
 //import removePost from '../redux/actions'
+*/
 
-function mapStateToProps(state){
-return{
-  todos: state
-}
-}
-function mapDispatchToProps(dispatch) {
-return bindActionCreators(actions,dispatch)
+import React,{Component} from 'react';
+import ReactDOM from 'react-dom';
+//import Main from './Main'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Main from'./Main'
+import '../styles/app.scss'
 
-}
-//this.props.state
-const App=withRouter(connect(mapStateToProps,mapDispatchToProps)(Main))
+import store from '../store/store';
+//import { getTodos } from './action/todos';
 
-export default App
+import { Provider } from 'react-redux';
+class App extends Component {
+  render() {
+    return (
+      
+                    <Route exact path="/" component={Main} />
+
+
+       );
+  }
+}
+
+export default App;

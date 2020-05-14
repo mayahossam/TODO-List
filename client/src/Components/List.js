@@ -3,21 +3,42 @@ import Todo from './Todo'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import { Button,FormGroup,TextInput,OrderedList,ListItem } from "carbon-components-react";
+import {connect} from 'react-redux'
+import AddTodo from './AddTodo.js'
 
-function List(props){
-  console.log("props")
-    console.log(props.todo)
-  return <div>
+const List = ({ todos,dispatch }) => (
+  <div>
+  <AddTodo todos={todos} dispatch={dispatch}/>
+
+  <ul className="todo-list">
+     {todos && todos.length
+       ? todos.map((todo, index) => {
+         console.log(`IDS: ${todo.id}`);
+         console.log(index);
+         console.log(todo);
+           return <Todo key={`todo-${todo.id}`} id={todo.id} item={todo.item} dispatch={dispatch}  />;
+         })
+       : "No todos, yay!"}
+   </ul>
+</div>
+);
+
+
+/*
+
+const List=(props) => (
+        return  <div>
           <OrderedList >
-          {props.todos
-            .sort(function(x,y){
-              return y.id-x.id
-            })
-            .map((todo,index) => <Todo key={index} todo = {todo} {...props} index={index} />)}
+          {console.log("List")}
+
+            {console.log(props.todos)}
+
           </OrderedList>
         </div>
-}
-List.propTypes={
-  todos:PropTypes.array.isRequired,
-}
-export default List
+})
+*/
+//{props.todos.map(todo => <Todo key={todo.id} todo = {todo.item}  />)};
+
+//{props.map(todo => <Todo key={todo.id} {...props} todo = {todo.item}  />)};
+
+export default connect()(List)

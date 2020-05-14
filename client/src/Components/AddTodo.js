@@ -1,13 +1,16 @@
 import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 import { Button,FormGroup,TextInput,OrderedList,ListItem } from "carbon-components-react";
+import { addTodo } from '../action/todos';
+import {connect} from 'react-redux'
 
 class AddTodo extends Component{
 //this.handleSubmit=this.handleSubmit.bind(this);
-todo={
+task={
   id:'',
   item:''
 }
+
   handleChange = (e) =>{
     e.preventDefault();
 
@@ -18,9 +21,9 @@ todo={
           //  this.props.addTodo(todo)
 
           if(item ){
-          this.todo= [{id: Number(new Date()),
+          this.task= [{id: Number(new Date()),
                     item:item}];
-                    console.log('Add', this.todo);
+                    console.log('Add', this.task);
 //this.setState( {id: Number(new Date()),
   //      item:item}
 //})
@@ -33,7 +36,15 @@ onAddClicked = () => {
   //   console.log('Add', this.state.text)
      //Dispatch Action
   //   this.props.addTodo(this.state.text);
-  this.props.addTodo(this.todo)
+  const items = this.props
+
+  console.log("this.props");
+
+  console.log(this.props);
+  console.log(this.task[0]);
+
+  items.dispatch(addTodo(this.task[0]));
+  //todo.addTodo(this.todo)
 
 
 }
@@ -55,6 +66,8 @@ this.props.onHistory.push('/')
   }
 */
   render(){
+
+
     return <div  className= "landing-page__p" >
     <form  >
 
@@ -70,4 +83,6 @@ this.props.onHistory.push('/')
   }
 }
 //
-export default AddTodo
+
+
+export default connect()(AddTodo);
