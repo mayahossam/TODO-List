@@ -3,7 +3,7 @@ import fs from 'fs';
 import bodyParser from 'body-parser';
 var express=require("express");
 var cors = require("cors");
-//var fs = require('fs');
+
 const app = express();
 //const router = express.Router();
 app.use(bodyParser.json());
@@ -19,12 +19,6 @@ function Checkheaders(request: Request, response: Response, next:NextFunction) {
 if(request.header('x-Gateway-Apikey')!=='fixed'||request.header('csrf-token') =='' ) {
           response.status(404).send({ error: 'Post not found' });
 }
-/*
-if(request.header('csrf-token') ==''){
-  response.status(404).send({ error: 'Post not found' });
-
-}
-*/
 next();
 }
 function loggerMiddleware(request: Request, response: Response, next:NextFunction) {
@@ -72,11 +66,11 @@ request.on("error", error => {
 }
 
 
-var data=[{item: 'get milk'},{item: 'walk the dog'}, {item: 'coding'}];
+var data=[{id:1,item: 'get milk'},{id:2,item: 'walk the dog'}, {id:3,item: 'coding'}];
 
 app.get('/todo', function(req:Request,response:Response) {
 //  console.log(request)
-response.send(data);
+response.json(data);
 
          var resp=JSON.stringify({
     response: {
@@ -89,16 +83,23 @@ response.send(data);
       }});
 });
 app.post('/todo',urlencodedParser,function(req:Request,res:Response){
+  var oneitem={id: req.body.id,item:req.body.item}
 
-data.push(req.body);
+//var oneitem={id: Number(new Date()),item:req.body}
+console.log("AddDATA");
 
-res.json(data);
+data.push(oneitem);
+console.log(req.body);
+
+res.json(oneitem);
 });
 
 app.delete('/todo/:id',function(req:Request,res:Response){
 console.log(req.params.id);
 var index=+req.params.id;
 data.splice(index, 1);
+console.log("RemovedDATA");
+
   console.log(data);
 //  res.sendFile(__dirname+'/index.html');
 res.json(data);
@@ -106,8 +107,12 @@ res.json(data);
 app.patch('/todo/:id',function(req:Request,res:Response){
 console.log(req.params.id);
 var index=+req.params.id;
- data[index]=req.body;
+data[index].id=Number(new Date());
+ data[index].item=req.body;
   console.log(data);
+  var oneitem={id: req.body.id,item:req.body.item}
+  console.log(item);
+
 //  res.sendFile(__dirname+'/index.html');
 res.json(data);
 });

@@ -1,0 +1,66 @@
+
+@import "carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family.scss";
+@import "carbon-components/scss/globals/scss/vendor/@carbon/layout/scss/breakpoint.scss";
+@import "carbon-components/scss/globals/scss/typography.scss";
+@import "carbon-components/scss/globals/scss/vars.scss";
+
+.form  {
+  text-align:center;
+  align-items: center;
+  @include carbon--type-style("productive-heading-03");
+  @include carbon--font-weight("semibold");
+}
+.TodoListItem{
+  margin-bottom:2px;
+  padding: 4rem;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: arial;
+  font-size: 20px;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+ListItem:hover{
+    text-decoration: line-through;
+    background: rgba(0,0,0,0.2);
+}
+.todo__heading {
+  text-align: center;
+
+  @include carbon--type-style("expressive-heading-06");
+}
+
+
+.todo__subheading {
+  @include carbon--type-style("productive-heading-03");
+  @include carbon--font-weight("semibold");
+}
+
+.landing-page__p {
+  border: 2px ;
+  padding: 4rem;
+  color:$interactive-02;
+  @include carbon--type-style("productive-heading-03");
+
+}
+.landing-page__p {
+  border: 2px ;
+  padding: 1rem;
+  color:$interactive-02;
+  @include carbon--type-style("productive-heading-03");
+  flex-wrap: wrap;
+display: block;
+
+}
+.photoGrid {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 1000px;
+	margin: 0 auto;
+
+}
+
+.landing-page__label {
+  @include carbon--type-style("heading-01");
+}
